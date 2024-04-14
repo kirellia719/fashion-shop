@@ -6,18 +6,16 @@ import SearchIcon from "@rsuite/icons/Search";
 import { Input, InputGroup, Tag, Button, Modal, Form } from "rsuite";
 import PlusIcon from "@rsuite/icons/Plus";
 
-import FashionModal from "../../component/FashionModal/FashionModal";
+import FashionModal from "./FashionModal/FashionModal";
+import FashionEdit from "./FashionEdit/FashionEdit";
+
 import api from "../../service/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartBold } from "@fortawesome/free-solid-svg-icons";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  GetAllFashionsAction,
-  UpdateFashionAction,
-} from "../../redux/FashionReducer";
-import FashionEdit from "../../component/FashionEdit/FashionEdit";
+import { UpdateFashionAction } from "../../redux/FashionReducer";
 
 function createList(n) {
   const list = [];
@@ -84,25 +82,12 @@ const FashionItem = (props) => {
 
 const FashionPage = () => {
   const fashions = useSelector((state) => state.Fashions);
-  const dispatch = useDispatch();
   const [type, setType] = useState(null);
   const [searchText, setSearchText] = useState("");
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  useEffect(() => {
-    try {
-      const fetchFashion = async () => {
-        const { data } = await api.get("/fashion");
-        dispatch(GetAllFashionsAction(data));
-      };
-      fetchFashion();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
 
   const categories = getDistinctCategory(fashions.map((f) => f.category));
 

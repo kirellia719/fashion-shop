@@ -6,7 +6,7 @@ import viteLogo from "/vite.svg";
 import MenuIcon from "@rsuite/icons/Menu";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
 import CalendarIcon from "@rsuite/icons/Calendar";
-import { Drawer, Sidenav, Nav } from "rsuite";
+import { Drawer, Sidenav, Nav, Button } from "rsuite";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,14 +23,17 @@ const Header = () => {
 
   return (
     <div className="Header">
-      <div className="logo">
-        <img src={viteLogo} className="logo" alt="Vite logo" />
-      </div>
       <div className="menu-btn" onClick={() => setOpen(true)}>
         <MenuIcon />
       </div>
+      <Button appearance="link">Lịch sử</Button>
+      <Button appearance="link">Tủ đồ</Button>
+      <div className="logo">
+        <img src={viteLogo} className="logo" alt="Vite logo" />
+      </div>
+
       <Drawer
-        placement="right"
+        placement="left"
         size="50%"
         open={open}
         onClose={() => setOpen(false)}

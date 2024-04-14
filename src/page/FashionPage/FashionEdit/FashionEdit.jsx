@@ -1,5 +1,3 @@
-import "./FashionModal.scss";
-
 import { useState } from "react";
 import {
   Input,
@@ -14,13 +12,15 @@ import {
   useToaster,
   Message,
 } from "rsuite";
+import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
 import { useDispatch } from "react-redux";
 
-import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
-
-import api from "../../service/api";
-import { AddFasionAction } from "../../redux/FashionReducer";
+import {
+  DeleteFashionAction,
+  UpdateFashionAction,
+} from "../../../redux/FashionReducer";
+import api from "../../../service/api";
 
 function toThousands(value) {
   return (
@@ -42,25 +42,20 @@ const ControlRow = ({ label, control, ...rest }) => (
   </FlexboxGrid>
 );
 
-const defaultForm = {
-  category: null,
-  name: "",
-  color: "",
-  date: null,
-  price: null,
-  image: null,
-};
-
 const warning = (value) => (
   <Message type="warning">
     Thiếu <strong>{value}</strong>
   </Message>
 );
-const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
+
+const FashionEdit = ({ onClose, open, categoryList, fashion, _id }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [formValue, setFormValue] = useState(defaultForm);
+  const [formValue, setFormValue] = useState({
+    ...fashion,
+    date: new Date(fashion.date),
+  });
   const toaster = useToaster();
 
   const handleChange = (name, value) => {
@@ -85,29 +80,55 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         } else {
           const formRequest = new FormData();
           for (let key in formValue) {
-            if (!formValue[key]) {
-              setLoading(false);
-
-              return;
-            }
             formRequest.append(key, formValue[key]);
           }
 
-          const { data } = await api.post("/fashion", formRequest);
-          dispatch(AddFasionAction(data));
+          const { data } = await api.put(`/fashion/${_id}`, formRequest);
+          dispatch(UpdateFashionAction(data));
           onClose();
-          setFormValue(defaultForm);
           toaster.push(
             <Message showIcon type="success">
-              Đã thêm
+              Cập nhật thành công
             </Message>,
-            { duration: 2000 }
+            {
+              duration: 2000,
+            }
           );
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
+
+  const handleDelete = async () => {
+    const confirm = window.confirm(`Chắc chắn xóa?`);
+    if (confirm) {
+      setLoading(true);
+      try {
+        const { data } = await api.delete(`/fashion/${_id}`);
+        toaster.push(
+          <Message showIcon type="success">
+            Đã xóa {fashion.name}
+          </Message>,
+          {
+            duration: 2000,
+          }
+        );
+        dispatch(DeleteFashionAction(_id));
+        onClose();
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    }
+  };
+
+  const preview = (image) => {
+    return typeof image == "string" ? image : URL.createObjectURL(image);
+  };
+
   const data = categoryList.map((c) => ({ label: c, value: c }));
 
   return (
@@ -115,10 +136,10 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
       size="calc(100% - 2rem)"
       open={open}
       onClose={onClose}
-      className={loading ? "no-events" : ""}
+      className="fashion-edit"
     >
       <Modal.Header>
-        <Modal.Title>Trang phục mới</Modal.Title>
+        <Modal.Title>Chỉnh sửa</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "unset" }}>
         <ControlRow
@@ -201,7 +222,7 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
               <button>
                 {formValue.image ? (
                   <img
-                    src={URL.createObjectURL(formValue.image)}
+                    src={preview(formValue.image)}
                     width="100%"
                     height="100%"
                     style={{ borderRadius: 10 }}
@@ -218,13 +239,18 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         {loading ? (
           <Loader />
         ) : (
-          <Button onClick={handleSubmit} appearance="primary">
-            Thêm
-          </Button>
+          <>
+            <Button appearance="ghost" onClick={handleDelete}>
+              Xóa
+            </Button>
+            <Button onClick={handleSubmit} appearance="primary">
+              Cập nhật
+            </Button>
+          </>
         )}
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default FashionModal;
+export default FashionEdit;
