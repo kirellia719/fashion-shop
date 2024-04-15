@@ -9,7 +9,11 @@
       overflow-x: auto;
       gap: 1.4rem;
       .item {
-        flex: 0 0 auto; /* Let items shrink if needed */
+        flex: 0 0 auto;
+        .tag-active {
+          background-color: var(--color-pink);
+          color: #fff;
+        }
       }
 
       .search-box {
@@ -85,7 +89,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(26, 182, 243);
+    background-color: var(--color-pink);
     color: #fff;
     border-radius: 50%;
   }

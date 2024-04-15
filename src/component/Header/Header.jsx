@@ -6,7 +6,7 @@ import viteLogo from "/vite.svg";
 import MenuIcon from "@rsuite/icons/Menu";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
 import CalendarIcon from "@rsuite/icons/Calendar";
-import { Drawer, Sidenav, Nav, Button } from "rsuite";
+import { Drawer, Sidenav, Nav, Button, Navbar } from "rsuite";
 
 import { Link, useLocation } from "react-router-dom";
 
@@ -23,16 +23,63 @@ const Header = () => {
 
   return (
     <div className="Header">
-      <div className="menu-btn" onClick={() => setOpen(true)}>
+      <Navbar style={{ width: "100%" }} appearance="subtle">
+        <Nav>
+          <Nav.Item className="nav-item">
+            <div className="logo">
+              <img src={viteLogo} className="logo" alt="Vite logo" />
+            </div>
+          </Nav.Item>
+        </Nav>
+        <Nav activeKey={activeKey} onSelect={setActiveKey} pullRight>
+          <Nav.Item
+            eventKey="/"
+            icon={<CalendarIcon />}
+            as={NavLink}
+            href="/"
+            className="nav-item"
+          >
+            Lịch sử
+          </Nav.Item>
+          <Nav.Item
+            eventKey="/fashion"
+            icon={<DashboardIcon />}
+            as={NavLink}
+            href="/fashion"
+            className="nav-item"
+          >
+            Tủ đồ
+          </Nav.Item>
+        </Nav>
+      </Navbar>
+      {/* <div className="menu-btn" onClick={() => setOpen(true)}>
         <MenuIcon />
-      </div>
-      <Button appearance="link">Lịch sử</Button>
-      <Button appearance="link">Tủ đồ</Button>
-      <div className="logo">
+      </div> */}
+      {/* <div className="logo">
         <img src={viteLogo} className="logo" alt="Vite logo" />
       </div>
+      <Nav activeKey={activeKey} onSelect={setActiveKey}>
+        <Nav.Item
+          eventKey="/"
+          icon={<CalendarIcon />}
+          as={NavLink}
+          href="/"
+          onClick={() => setOpen(false)}
+        >
+          Lịch sử
+        </Nav.Item>
+        <Nav.Item
+          eventKey="/fashion"
+          icon={<DashboardIcon />}
+          as={NavLink}
+          href="/fashion"
+          onClick={() => setOpen(false)}
+        >
+          Tủ đồ
+        </Nav.Item>
+      </Nav> */}
 
-      <Drawer
+      {/* <Drawer
         placement="left"
         size="50%"
         open={open}
@@ -62,7 +109,7 @@ const Header = () => {
             </Nav>
           </Sidenav.Body>
         </Sidenav>
-      </Drawer>
+      </Drawer> */}
     </div>
   );
 };

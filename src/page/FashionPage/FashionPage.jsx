@@ -120,7 +120,7 @@ const FashionPage = () => {
           <div className="category-box item">
             <Tag
               size="lg"
-              color={!type ? "blue" : ""}
+              className={!type ? "tag-active" : "tag"}
               onClick={() => setType(null)}
             >
               Tất cả (<code>{fashions.length}</code>)
@@ -128,7 +128,7 @@ const FashionPage = () => {
             {CategoryList.map((t) => (
               <Tag
                 size="lg"
-                color={type == t ? "blue" : ""}
+                className={type == t ? "tag-active" : "tag"}
                 onClick={() => setType(t)}
                 key={"category" + t}
               >

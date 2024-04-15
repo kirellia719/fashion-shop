@@ -19,6 +19,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ImagePicker from "../../../component/ImagePicker/ImagePicker";
 
+import api from "../../../service/api";
+import { GetAllHistoriesAction } from "../../../redux/HistoryReducer";
+
 const ControlRow = ({ label, control, ...rest }) => (
   <FlexboxGrid {...rest} style={{ marginBottom: 10 }} align="middle">
     <FlexboxGrid.Item colspan={10}>{label}: </FlexboxGrid.Item>
@@ -54,13 +57,24 @@ const HistoryModal = ({ onClose, open }) => {
     try {
       if (!loading) {
         const { data } = await api.post("/history", formValue);
-        console.log(data);
+        dispatch(GetAllHistoriesAction(data));
+        setFormValue(defaultForm);
+        onClose();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      toaster.push(
+        <Message showIcon type="error">
+          {error.response.data}
+        </Message>,
+        { duration: 2000 }
+      );
+    }
     setLoading(false);
   };
 
   const fashionsOption = fashions.map((f) => ({
+    name: f.name,
     image: f.image,
     value: f._id,
     category: f.category,
@@ -93,12 +107,6 @@ const HistoryModal = ({ onClose, open }) => {
           <FlexboxGrid.Item colspan={18} style={{ marginBottom: 10 }}>
             Trang phục:
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={6} style={{ textAlign: "end" }}>
-            <Button appearance="link" onClick={() => selectClothes([])}>
-              Clear
-            </Button>
-          </FlexboxGrid.Item>
-          <br />
           <FlexboxGrid.Item colspan={24}>
             <ImagePicker
               data={fashionsOption}

@@ -6,6 +6,8 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { Modal } from "rsuite";
 import { faShirt } from "@fortawesome/free-solid-svg-icons/faShirt";
 import HistoryModal from "./HistoryModal/HistoryModal";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 const ClothesItem = ({
   image = "https://i.pinimg.com/564x/43/68/be/4368be35f084ae89a75475c5ec0d7feb.jpg",
@@ -29,6 +31,8 @@ const HistoryPage = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const histories = useSelector((state) => state.Histories);
   useEffect(() => {
     try {
     } catch (error) {
@@ -39,35 +43,23 @@ const HistoryPage = () => {
   return (
     <div className="history-page">
       <div className="histories-list">
-        <div className="history-item">
-          <div className="history-header">
-            <div className="date-title">29/12/2023</div>
-            <div className="setting">
-              <FontAwesomeIcon icon={faPenToSquare} />
+        {histories.map((h, index) => (
+          <div className="history-item" key={index}>
+            <div className="history-header">
+              <div className="date-title">
+                {moment(h.date).format("DD/MM/yyyy")}
+              </div>
+              <div className="setting">
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </div>
+            </div>
+            <div className="clothes-list">
+              {h.clothes.map((c, index) => (
+                <ClothesItem key={h.date + c._id} image={c.image} />
+              ))}
             </div>
           </div>
-          <div className="clothes-list">
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062093/fashion/dbjizj3x3zjmrcxdphu9.jpg" />
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062162/fashion/pznyy2rlpmlmulme5jgq.jpg" />
-            <ClothesItem />
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062680/fashion/mqwqthxibr9ctce4ecwk.jpg" />
-          </div>
-        </div>
-
-        <div className="history-item">
-          <div className="history-header">
-            <div className="date-title">27/12/2023</div>
-            <div className="setting">
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </div>
-          </div>
-          <div className="clothes-list">
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062093/fashion/dbjizj3x3zjmrcxdphu9.jpg" />
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062162/fashion/pznyy2rlpmlmulme5jgq.jpg" />
-            <ClothesItem image="https://res.cloudinary.com/dnvpdjbx0/image/upload/v1713062680/fashion/mqwqthxibr9ctce4ecwk.jpg" />
-            <ClothesItem />
-          </div>
-        </div>
+        ))}
       </div>
       <div className="add-btn" onClick={handleOpen}>
         <FontAwesomeIcon icon={faShirt} />
