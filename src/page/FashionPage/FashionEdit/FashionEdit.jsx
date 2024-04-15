@@ -1,4 +1,6 @@
 import { useState } from "react";
+import api from "api";
+
 import {
   Input,
   Button,
@@ -15,12 +17,10 @@ import {
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
 import { useDispatch } from "react-redux";
-
 import {
   DeleteFashionAction,
   UpdateFashionAction,
-} from "../../../redux/FashionReducer";
-import api from "../../../service/api";
+} from "~/redux/FashionReducer";
 
 function toThousands(value) {
   return (

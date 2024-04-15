@@ -20,7 +20,6 @@ const ImagePicker = ({ data, value = [], onChange, groupBy }) => {
   const dataOptions = data.filter(
     (d) => !search || d.name.toLowerCase().includes(search.toLowerCase())
   );
-  console.log(dataOptions);
 
   return (
     <div className="ImagePicker">
@@ -38,7 +37,7 @@ const ImagePicker = ({ data, value = [], onChange, groupBy }) => {
           </InputGroup>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: "end" }}>
-          <Button appearance="link" onClick={() => selectClothes([])}>
+          <Button appearance="link" onClick={() => onChange([])}>
             Clear
           </Button>
         </FlexboxGrid.Item>

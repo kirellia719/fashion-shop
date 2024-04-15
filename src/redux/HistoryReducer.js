@@ -1,9 +1,7 @@
 const initialState = [];
 
-const ALL_HISTORIES = "GellAllHistory";
-const ADD_FASHION = "AddFashion";
-const UPDATE_FASHION = "UpdateFashion";
-const DELETE_FASHION = "DeleteFashion";
+const ALL_HISTORIES = "GellAllHistories";
+const UPDATE_HISTORY = "UpdateHistory";
 
 const HistoryReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -11,6 +9,16 @@ const HistoryReducer = (state = initialState, action) => {
   switch (type) {
     case ALL_HISTORIES:
       return [...payload];
+    case UPDATE_HISTORY:
+      console.log(state, payload);
+      newHistories = [...state].map((f) => {
+        if (f._id === payload._id) {
+          return payload;
+        } else {
+          return f;
+        }
+      });
+      return newHistories;
     default:
       return state;
   }
@@ -19,6 +27,10 @@ const HistoryReducer = (state = initialState, action) => {
 // ACTION
 export const GetAllHistoriesAction = (histories) => async (dispatch) => {
   dispatch({ type: ALL_HISTORIES, payload: histories });
+};
+
+export const UpdateHistoryAction = (history) => async (dispatch) => {
+  dispatch({ type: UPDATE_HISTORY, payload: history });
 };
 
 export default HistoryReducer;

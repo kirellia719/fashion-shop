@@ -1,12 +1,14 @@
 import "./MainLayout.scss";
 
-import Header from "../../component/Header/Header";
-import { Outlet } from "react-router-dom";
-import { GetAllFashionsAction } from "../../redux/FashionReducer";
-import { GetAllHistoriesAction } from "../../redux/HistoryReducer";
-import api from "../../service/api";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import api from "api";
+
+import Header from "~/component/Header/Header";
+import { Outlet } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { GetAllFashionsAction } from "~/redux/FashionReducer";
+import { GetAllHistoriesAction } from "~/redux/HistoryReducer";
 
 const MainLayout = () => {
   const dispatch = useDispatch();

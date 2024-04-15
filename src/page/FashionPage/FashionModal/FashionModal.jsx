@@ -1,6 +1,8 @@
 import "./FashionModal.scss";
 
 import { useState } from "react";
+import api from "api";
+
 import {
   Input,
   Button,
@@ -19,8 +21,7 @@ import { useDispatch } from "react-redux";
 
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
-import { AddFasionAction } from "../../../redux/FashionReducer";
-import api from "../../../service/api";
+import { AddFasionAction } from "~/redux/FashionReducer";
 
 function toThousands(value) {
   return (

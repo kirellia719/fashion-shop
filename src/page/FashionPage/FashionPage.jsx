@@ -1,21 +1,21 @@
 import "./FashionPage.scss";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import api from "api";
+
+import { useSelector, useDispatch } from "react-redux";
+import { UpdateFashionAction } from "~/redux/FashionReducer";
 
 import SearchIcon from "@rsuite/icons/Search";
-import { Input, InputGroup, Tag, Button, Modal, Form } from "rsuite";
+import { Input, InputGroup, Tag } from "rsuite";
 import PlusIcon from "@rsuite/icons/Plus";
 
 import FashionModal from "./FashionModal/FashionModal";
 import FashionEdit from "./FashionEdit/FashionEdit";
 
-import api from "../../service/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartBold } from "@fortawesome/free-solid-svg-icons";
-
-import { useSelector, useDispatch } from "react-redux";
-import { UpdateFashionAction } from "../../redux/FashionReducer";
 
 function createList(n) {
   const list = [];

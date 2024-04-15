@@ -1,11 +1,12 @@
-import "./HistoryModal.scss";
+import "./HistoryEdit.scss";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "api";
+import moment from "moment";
+
 import {
   Button,
   Modal,
-  DatePicker,
   FlexboxGrid,
   Loader,
   useToaster,
@@ -14,73 +15,43 @@ import {
 import ImagePicker from "~/component/ImagePicker/ImagePicker";
 
 import { useDispatch, useSelector } from "react-redux";
-import { GetAllHistoriesAction } from "~/redux/HistoryReducer";
+import { UpdateHistoryAction } from "~/redux/HistoryReducer";
 
-const ControlRow = ({ label, control, ...rest }) => (
-  <FlexboxGrid {...rest} style={{ marginBottom: 10 }} align="middle">
-    <FlexboxGrid.Item colspan={10}>{label}: </FlexboxGrid.Item>
-    <FlexboxGrid.Item
-      colspan={14}
-      style={{ display: "flex", justifyContent: "flex-end" }}
-    >
-      {control}
-    </FlexboxGrid.Item>
-  </FlexboxGrid>
-);
-
-const defaultForm = {
-  date: null,
-  clothes: [],
-};
-
-function areDatesEqual(date1, date2) {
-  return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-}
-
-const HistoryModal = ({ onClose, open }) => {
+const HistoryEdit = ({ onClose, open, data }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [formValue, setFormValue] = useState(defaultForm);
+  const [formValue, setFormValue] = useState({
+    clothes: data.clothes.map((d) => d._id),
+  });
   const fashions = useSelector((state) => state.Fashions);
-  const histories = useSelector((state) => state.Histories);
   const toaster = useToaster();
-
-  const isExistDate = (date) => {
-    const checkExist = histories.find((h) =>
-      areDatesEqual(date, new Date(h.date))
-    );
-    return checkExist ? true : false;
-  };
-
-  useEffect(() => {
-    if (!isExistDate(new Date())) {
-      setFormValue((prev) => ({ ...prev, date: new Date() }));
-    }
-  }, []);
 
   const selectClothes = (v) =>
     setFormValue((prev) => ({ ...prev, clothes: v }));
-
-  const changeDate = (v) => setFormValue((prev) => ({ ...prev, date: v }));
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
       if (!loading) {
-        if (formValue.date && formValue.clothes.length > 0) {
-          const { data } = await api.post("/history", formValue);
-          dispatch(GetAllHistoriesAction(data));
-          setFormValue(defaultForm);
+        if (formValue.clothes.length > 0) {
+          const { data: response } = await api.put(
+            `/history/${data._id}`,
+            formValue
+          );
+          dispatch(UpdateHistoryAction(response));
           onClose();
+
+          toaster.push(
+            <Message showIcon type="success">
+              Đã cập nhật
+            </Message>,
+            { duration: 2000 }
+          );
         } else {
           toaster.push(
             <Message showIcon type="warning">
-              Vui lòng điền đầy đủ
+              Không có trang phục
             </Message>,
             { duration: 2000 }
           );
@@ -113,22 +84,11 @@ const HistoryModal = ({ onClose, open }) => {
       className={loading ? "no-events" : ""}
     >
       <Modal.Header>
-        <Modal.Title>Lịch sử mặc</Modal.Title>
+        <Modal.Title>
+          Ngày {moment(new Date(data.date)).format("DD/MM/yyyy")}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "unset", overflow: "unset" }}>
-        <ControlRow
-          label="Ngày"
-          control={
-            <DatePicker
-              oneTap
-              placement="bottomEnd"
-              format="dd/MM/yyyy"
-              value={formValue.date}
-              onChange={changeDate}
-              shouldDisableDate={(date) => isExistDate(date)}
-            />
-          }
-        />
         <FlexboxGrid style={{ alignItems: "center" }}>
           <FlexboxGrid.Item colspan={18} style={{ marginBottom: 10 }}>
             Trang phục:
@@ -147,7 +107,7 @@ const HistoryModal = ({ onClose, open }) => {
           <Loader />
         ) : (
           <Button onClick={handleSubmit} appearance="primary">
-            Thêm
+            Cập nhật
           </Button>
         )}
       </Modal.Footer>
@@ -155,4 +115,4 @@ const HistoryModal = ({ onClose, open }) => {
   );
 };
 
-export default HistoryModal;
+export default HistoryEdit;

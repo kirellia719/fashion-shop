@@ -1,13 +1,19 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./HistoryPage.scss";
 
-import { useEffect, useState } from "react";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { Modal } from "rsuite";
-import { faShirt } from "@fortawesome/free-solid-svg-icons/faShirt";
-import HistoryModal from "./HistoryModal/HistoryModal";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import { useEffect, useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faShirt } from "@fortawesome/free-solid-svg-icons/faShirt";
+
+import { Modal } from "rsuite";
+import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
+
+import HistoryModal from "./HistoryModal/HistoryModal";
+import HistoryEdit from "./HistoryEdit/HistoryEdit";
+
+import { useSelector } from "react-redux";
 
 const ClothesItem = ({
   image = "https://i.pinimg.com/564x/43/68/be/4368be35f084ae89a75475c5ec0d7feb.jpg",
@@ -23,6 +29,32 @@ const ClothesItem = ({
         <Modal.Header></Modal.Header>
         <img src={image} alt="" style={{ width: "100%" }} />
       </Modal>
+    </div>
+  );
+};
+
+const HistoryItem = (h) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div className="history-item">
+      <div className="history-header">
+        <div className="date-title">
+          <ArrowRightLineIcon />
+          {moment(h?.date).format("DD/MM/yyyy")}
+        </div>
+        <div className="setting">
+          <FontAwesomeIcon icon={faPenToSquare} onClick={handleOpen} />
+        </div>
+        {open && <HistoryEdit onClose={handleClose} open={open} data={h} />}
+      </div>
+      <div className="clothes-list">
+        {h.clothes.map((c) => (
+          <ClothesItem key={h.date + c._id} image={c.image} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -44,28 +76,14 @@ const HistoryPage = () => {
     <div className="history-page">
       <div className="histories-list">
         {histories.map((h, index) => (
-          <div className="history-item" key={index}>
-            <div className="history-header">
-              <div className="date-title">
-                {moment(h.date).format("DD/MM/yyyy")}
-              </div>
-              <div className="setting">
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </div>
-            </div>
-            <div className="clothes-list">
-              {h.clothes.map((c, index) => (
-                <ClothesItem key={h.date + c._id} image={c.image} />
-              ))}
-            </div>
-          </div>
+          <HistoryItem key={index} {...h} />
         ))}
       </div>
       <div className="add-btn" onClick={handleOpen}>
         <FontAwesomeIcon icon={faShirt} />
       </div>
 
-      <HistoryModal open={open} onClose={handleClose}></HistoryModal>
+      {open && <HistoryModal open={open} onClose={handleClose}></HistoryModal>}
     </div>
   );
 };
