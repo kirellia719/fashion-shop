@@ -50,6 +50,15 @@ const Header = () => {
           >
             Tủ đồ
           </Nav.Item>
+          <Nav.Item
+            eventKey="/statistic"
+            icon={<DashboardIcon />}
+            as={NavLink}
+            href="/statistic"
+            className="nav-item"
+          >
+            Thống kê
+          </Nav.Item>
         </Nav>
       </Navbar>
       {/* <div className="menu-btn" onClick={() => setOpen(true)}>

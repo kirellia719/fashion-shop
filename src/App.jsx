@@ -5,6 +5,7 @@ import MainLayout from "./layout/MainLayout/MainLayout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import FashionPage from "./page/FashionPage/FashionPage";
 import HistoryPage from "./page/HistoryPage/HistoryPage";
+import StatisticPage from "./page/StatisticPage/StatisticPage";
 
 import store from "./redux";
 import { Provider } from "react-redux";
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "fashion",
         element: <FashionPage />,
+      },
+      {
+        path: "statistic",
+        element: <StatisticPage />,
       },
     ],
   },

@@ -58,15 +58,20 @@ const HistoryModal = ({ onClose, open }) => {
   };
 
   useEffect(() => {
-    if (!isExistDate(new Date())) {
-      setFormValue((prev) => ({ ...prev, date: new Date() }));
+    const n = new Date();
+    n.setHours(1, 1, 1);
+    if (!isExistDate(n)) {
+      setFormValue((prev) => ({ ...prev, date: n }));
     }
   }, []);
 
   const selectClothes = (v) =>
     setFormValue((prev) => ({ ...prev, clothes: v }));
 
-  const changeDate = (v) => setFormValue((prev) => ({ ...prev, date: v }));
+  const changeDate = (v) => {
+    v.setHours(1, 1, 1);
+    setFormValue((prev) => ({ ...prev, date: v }));
+  };
 
   const handleSubmit = async () => {
     setLoading(true);

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faShirt } from "@fortawesome/free-solid-svg-icons/faShirt";
+import { faShirt, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { Modal } from "rsuite";
 import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 
 const ClothesItem = ({
   image = "https://i.pinimg.com/564x/43/68/be/4368be35f084ae89a75475c5ec0d7feb.jpg",
+  liked = false,
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -24,6 +25,11 @@ const ClothesItem = ({
   return (
     <div className="clothes-item">
       <img onClick={handleOpen} src={image} alt="" />
+      {liked && (
+        <div className="like-btn">
+          <FontAwesomeIcon icon={faHeart} />
+        </div>
+      )}
 
       <Modal onClose={handleClose} open={open} size="min(100%, 350px)">
         <Modal.Header></Modal.Header>
@@ -52,7 +58,7 @@ const HistoryItem = (h) => {
       </div>
       <div className="clothes-list">
         {h.clothes.map((c) => (
-          <ClothesItem key={h.date + c._id} image={c.image} />
+          <ClothesItem key={h.date + c._id} image={c.image} liked={c.liked} />
         ))}
       </div>
     </div>

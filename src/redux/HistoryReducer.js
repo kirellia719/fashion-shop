@@ -10,7 +10,6 @@ const HistoryReducer = (state = initialState, action) => {
     case ALL_HISTORIES:
       return [...payload];
     case UPDATE_HISTORY:
-      console.log(state, payload);
       newHistories = [...state].map((f) => {
         if (f._id === payload._id) {
           return payload;
