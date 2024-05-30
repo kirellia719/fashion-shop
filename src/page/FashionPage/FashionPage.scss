@@ -8,6 +8,7 @@
       display: flex;
       overflow-x: auto;
       gap: 1.4rem;
+
       .item {
         flex: 0 0 auto;
         .tag-active {
@@ -30,15 +31,21 @@
   .fashion-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
     gap: 1rem;
     padding: 1rem 2rem;
     row-gap: 1rem;
+    @media only screen and (max-width: 472px) {
+      gap: 0.5rem;
+      padding: 1rem 0.75rem;
+      row-gap: 0.5rem;
+    }
     .fashion-item {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      width: calc(100% / 4 - 1rem);
+      width: calc(100% / 8 - 1rem);
+
       .image {
         background-color: rgba(197, 197, 197, 0);
         width: 100%;
@@ -70,11 +77,34 @@
         }
       }
       .name {
-        font-size: 0.8rem;
+        font-size: 1rem;
         text-align: center;
         // white-space: nowrap;
         // overflow: hidden;
         // text-overflow: ellipsis;
+      }
+
+      @media only screen and (max-width: 1200px) {
+        width: calc(100% / 7 - 1rem);
+      }
+
+      @media only screen and (max-width: 1000px) {
+        width: calc(100% / 6 - 1rem);
+      }
+      @media only screen and (max-width: 800px) {
+        width: calc(100% / 5 - 1rem);
+        .name {
+          font-size: 0.9rem;
+        }
+      }
+      @media only screen and (max-width: 600px) {
+        width: calc(100% / 4 - 1rem);
+        .name {
+          font-size: 0.8rem;
+        }
+      }
+      @media only screen and (max-width: 472px) {
+        width: calc(100% / 3 - 0.5rem);
       }
     }
   }
@@ -83,6 +113,7 @@
     position: fixed;
     bottom: 1rem;
     right: 1rem;
+    cursor: pointer;
 
     padding: 1rem;
     font-size: 1.2rem;

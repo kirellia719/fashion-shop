@@ -81,7 +81,7 @@ const HistoryEdit = ({ onClose, open, data }) => {
       size="calc(100% - 2rem)"
       open={open}
       onClose={onClose}
-      className={loading ? "no-events" : ""}
+      className={`fashion-modal ${loading ? "no-events" : ""}`}
     >
       <Modal.Header>
         <Modal.Title>

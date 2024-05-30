@@ -103,7 +103,7 @@ const FashionPage = () => {
   return (
     <div className="fashion-page">
       <div className="filter-container">
-        <div className="filter-box">
+        <div className="filter-box custom-scrollbar">
           <div className="search-box item">
             <InputGroup>
               <InputGroup.Button>
@@ -142,9 +142,9 @@ const FashionPage = () => {
         {newFashions.map((f) => (
           <FashionItem key={f._id} {...f} />
         ))}
-        {createList((4 - (newFashions.length % 4)) % 4).map((item, index) => (
+        {/* {createList((4 - (newFashions.length % 4)) % 4).map((item, index) => (
           <FashionItem key={index} />
-        ))}
+        ))} */}
       </div>
 
       <div className="add-btn" onClick={handleOpen}>

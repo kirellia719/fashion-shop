@@ -1,3 +1,5 @@
+import "./FashionEdit.scss";
+
 import { useState } from "react";
 import api from "api";
 
@@ -136,7 +138,7 @@ const FashionEdit = ({ onClose, open, categoryList, fashion, _id }) => {
       size="calc(100% - 2rem)"
       open={open}
       onClose={onClose}
-      className="fashion-edit"
+      className="fashion-modal"
     >
       <Modal.Header>
         <Modal.Title>Chỉnh sửa</Modal.Title>

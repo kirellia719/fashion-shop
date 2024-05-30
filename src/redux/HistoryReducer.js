@@ -2,6 +2,7 @@ const initialState = [];
 
 const ALL_HISTORIES = "GellAllHistories";
 const UPDATE_HISTORY = "UpdateHistory";
+const DELETE_HISTORY = "DeleteHistory";
 
 const HistoryReducer = (state = initialState, action) => {
   const { type, payload } = action;
@@ -18,6 +19,9 @@ const HistoryReducer = (state = initialState, action) => {
         }
       });
       return newHistories;
+    case DELETE_HISTORY:
+      newHistories = state.filter((f) => f._id != payload);
+      return newHistories;
     default:
       return state;
   }
@@ -30,6 +34,10 @@ export const GetAllHistoriesAction = (histories) => async (dispatch) => {
 
 export const UpdateHistoryAction = (history) => async (dispatch) => {
   dispatch({ type: UPDATE_HISTORY, payload: history });
+};
+
+export const DeleteHistoryAction = (_id) => async (dispatch) => {
+  dispatch({ type: DELETE_HISTORY, payload: _id });
 };
 
 export default HistoryReducer;

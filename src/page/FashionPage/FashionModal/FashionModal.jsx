@@ -113,10 +113,10 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
 
   return (
     <Modal
-      size="calc(100% - 2rem)"
+      size="calc(100% - 1.5rem)"
       open={open}
       onClose={onClose}
-      className={loading ? "no-events" : ""}
+      className={`fashion-modal ${loading ? "no-events" : ""}`}
     >
       <Modal.Header>
         <Modal.Title>Trang phục mới</Modal.Title>

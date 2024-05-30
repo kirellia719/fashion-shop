@@ -1,6 +1,5 @@
 .history-page {
   height: 100%;
-  overflow: scroll;
 
   .histories-list {
     display: flex;
@@ -10,33 +9,47 @@
       padding: 1rem;
       .history-header {
         display: flex;
-        gap: 10px;
+        gap: 1rem;
         align-items: center;
         padding-bottom: 5px;
         .date-title {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-weight: 500;
           color: #333;
+
+          &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
         }
 
         .setting {
           font-size: 1.2rem;
+
+          .remove-history {
+            cursor: pointer;
+          }
         }
       }
       .clothes-list {
-        display: grid;
-        grid-template-columns:
-          calc((100% - 12px) / 5) calc((100% - 12px) / 5) calc(
-            (100% - 12px) / 5
-          )
-          calc((100% - 12px) / 5) calc((100% - 12px) / 5);
-        column-gap: 3px;
-        row-gap: 3px;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
 
         .clothes-item {
-          aspect-ratio: 2/3;
           border: 1px solid #ccc;
           position: relative;
+          height: 200px;
+          @media only screen and (max-width: 1200px) {
+            height: 175px;
+          }
+          @media only screen and (max-width: 800px) {
+            height: 150px;
+          }
+          @media only screen and (max-width: 500px) {
+            height: 125px;
+          }
+
           img {
             object-fit: cover;
             width: 100%;
