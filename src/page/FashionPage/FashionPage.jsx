@@ -17,14 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartBold } from "@fortawesome/free-solid-svg-icons";
 
-function createList(n) {
-  const list = [];
-  for (let i = 0; i < n; i++) {
-    list.push(null);
-  }
-  return list;
-}
-
 const getDistinctCategory = (arr) => {
   const valueAppearance = arr.reduce((acc, curr) => {
     acc[curr] = (acc[curr] || 0) + 1;
@@ -147,10 +139,13 @@ const FashionPage = () => {
           </div>
         </div>
       </div>
-      <div className="fashion-container">
-        {newFashions.map((f) => (
-          <FashionItem key={f._id} {...f} />
-        ))}
+
+      <div className="fashion-wr custom-scrollbar">
+        <div className="fashion-container">
+          {newFashions.map((f) => (
+            <FashionItem key={f._id} {...f} />
+          ))}
+        </div>
       </div>
 
       <div className="add-btn" onClick={handleOpen}>
