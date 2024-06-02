@@ -19,6 +19,8 @@ import {
 
 import { useDispatch } from "react-redux";
 
+import { sizeOptions } from "../../../utils/constants";
+
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
 import { AddFasionAction } from "~/redux/FashionReducer";
@@ -50,6 +52,7 @@ const defaultForm = {
   date: null,
   price: null,
   image: null,
+  size: "XS",
 };
 
 const warning = (value) => (
@@ -72,7 +75,7 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
     setLoading(true);
     try {
       if (!loading) {
-        const { category, name, color, date, price, image } = formValue;
+        const { category, name } = formValue;
         if (!category) {
           toaster.push(warning("Danh mục"), {
             placement: "topCenter",
@@ -88,11 +91,12 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
           for (let key in formValue) {
             if (!formValue[key]) {
               setLoading(false);
-
               return;
             }
             formRequest.append(key, formValue[key]);
           }
+
+          console.log(formValue);
 
           const { data } = await api.post("/fashion", formRequest);
           dispatch(AddFasionAction(data));
@@ -146,6 +150,18 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
               placeholder="..."
               onChange={(value) => handleChange("name", value)}
               value={formValue.name}
+            />
+          }
+        />
+        <ControlRow
+          label="Size"
+          control={
+            <InputPicker
+              style={{ width: 150 }}
+              data={sizeOptions.map((s) => ({ label: s, value: s }))}
+              onChange={(v) => handleChange("size", v)}
+              value={formValue.size}
+              cleanable={false}
             />
           }
         />

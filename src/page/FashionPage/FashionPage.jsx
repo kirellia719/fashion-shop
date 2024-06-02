@@ -48,7 +48,7 @@ const FashionItem = (props) => {
     } catch (error) {}
   };
 
-  const { _id, name, image, liked, category, price, color, date } = props;
+  const { _id, name, image, liked, category, price, color, date, size } = props;
 
   const categories = getDistinctCategory(fashions.map((f) => f.category));
 
@@ -70,7 +70,16 @@ const FashionItem = (props) => {
               open={open}
               onClose={handleClose}
               categoryList={CategoryList}
-              fashion={{ name, image, liked, category, price, color, date }}
+              fashion={{
+                name,
+                image,
+                liked,
+                category,
+                price,
+                color,
+                date,
+                size,
+              }}
               _id={_id}
             />
           )}

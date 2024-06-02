@@ -18,6 +18,8 @@ import {
 } from "rsuite";
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
+import { sizeOptions } from "../../../utils/constants";
+
 import { useDispatch } from "react-redux";
 import {
   DeleteFashionAction,
@@ -168,6 +170,18 @@ const FashionEdit = ({ onClose, open, categoryList, fashion, _id }) => {
               placeholder="..."
               onChange={(value) => handleChange("name", value)}
               value={formValue.name}
+            />
+          }
+        />
+        <ControlRow
+          label="Size"
+          control={
+            <InputPicker
+              style={{ width: 150 }}
+              data={sizeOptions.map((s) => ({ label: s, value: s }))}
+              onChange={(v) => handleChange("size", v)}
+              value={formValue.size}
+              cleanable={false}
             />
           }
         />
