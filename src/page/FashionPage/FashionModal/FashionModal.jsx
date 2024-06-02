@@ -214,6 +214,7 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
                 handleChange("image", file.blobFile);
               }}
               action=""
+              draggable
             >
               <button>
                 {formValue.image ? (
