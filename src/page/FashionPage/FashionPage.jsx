@@ -151,9 +151,6 @@ const FashionPage = () => {
         {newFashions.map((f) => (
           <FashionItem key={f._id} {...f} />
         ))}
-        {/* {createList((4 - (newFashions.length % 4)) % 4).map((item, index) => (
-          <FashionItem key={index} />
-        ))} */}
       </div>
 
       <div className="add-btn" onClick={handleOpen}>
