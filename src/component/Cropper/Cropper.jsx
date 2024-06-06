@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
-import ReactCrop from "react-image-crop";
+import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { Button } from "rsuite";
+
+const ASPECT = 2 / 3;
 
 function mimeToExtension(mime) {
   switch (mime) {
@@ -73,10 +75,32 @@ const Cropper = ({ imageToCrop, croppedImage }) => {
     croppedImage(newFile);
   };
 
+  function onImageLoad(e) {
+    const { naturalWidth: width, naturalHeight: height } = e.currentTarget;
+
+    const crop = centerCrop(
+      makeAspectCrop(
+        {
+          // You don't need to pass a complete crop into
+          // makeAspectCrop or centerCrop.
+          unit: "%",
+          width: 90,
+        },
+        ASPECT,
+        width,
+        height
+      ),
+      width,
+      height
+    );
+
+    setCrop(crop);
+  }
+
   return (
     <>
-      <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
-        <img src={imageToCrop} alt="" ref={imageRef} />
+      <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={ASPECT}>
+        <img src={imageToCrop} alt="" ref={imageRef} onLoad={onImageLoad} />
       </ReactCrop>
       <Button appearance="primary" color="green" onClick={cropImageNow}>
         Save

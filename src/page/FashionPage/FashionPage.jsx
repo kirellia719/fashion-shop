@@ -97,13 +97,15 @@ const FashionPage = () => {
   const CategoryList = Object.keys(categories);
 
   const newFashions = fashions
-    .filter((f) => !type || f.category === type)
+    .filter((f) => !type || f.category === type || (type == "liked" && f.liked))
     .filter(
       (f) =>
         !searchText || f.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
   const sum = fashions.reduce((prev, f) => prev + parseInt(f.price), 0);
+
+  const sumLiked = fashions.reduce((prev, f) => prev + (f.liked ? 1 : 0), 0);
 
   return (
     <div className="fashion-page">
@@ -130,6 +132,13 @@ const FashionPage = () => {
               onClick={() => setType(null)}
             >
               Tất cả (<code>{fashions.length}</code>)
+            </Tag>
+            <Tag
+              size="lg"
+              className={type == "liked" ? "tag-active" : "tag"}
+              onClick={() => setType("liked")}
+            >
+              Yêu thích (<code>{sumLiked}</code>)
             </Tag>
             {CategoryList.map((t) => (
               <Tag
