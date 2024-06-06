@@ -36,12 +36,30 @@
   .clothes-container {
     padding: 0.5rem 1rem;
     .clothes-list {
+      --col: 8;
       display: grid;
-      grid-template-columns:
-        calc((100% - 12px) / 5) calc((100% - 12px) / 5) calc((100% - 12px) / 5)
-        calc((100% - 12px) / 5) calc((100% - 12px) / 5);
+      grid-template-columns: repeat(
+        var(--col),
+        calc((100% - 12px) / var(--col))
+      );
       column-gap: 3px;
       row-gap: 3px;
+      @media only screen and (max-width: 1200px) {
+        --col: 7;
+      }
+
+      @media only screen and (max-width: 1000px) {
+        --col: 6;
+      }
+      @media only screen and (max-width: 800px) {
+        --col: 5;
+      }
+      @media only screen and (max-width: 600px) {
+        --col: 4;
+      }
+      @media only screen and (max-width: 472px) {
+        --col: 3;
+      }
 
       .clothes-item {
         aspect-ratio: 2/3;
