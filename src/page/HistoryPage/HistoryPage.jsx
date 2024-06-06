@@ -9,13 +9,26 @@ import { faSquareMinus } from "@fortawesome/free-regular-svg-icons";
 import { faShirt, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 import { Button, Message, Modal, useToaster } from "rsuite";
-import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
 
 import HistoryModal from "./HistoryModal/HistoryModal";
 import HistoryEdit from "./HistoryEdit/HistoryEdit";
 
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteHistoryAction } from "../../redux/HistoryReducer";
+
+const formatDate = (date) => {
+  var ngay = moment(date);
+
+  // Danh sách các ngày trong tuần
+  var thu_trong_tuan = ["Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7", "CN"];
+
+  // Lấy tên ngày trong tuần từ đối tượng ngày
+  var thu = thu_trong_tuan[ngay.day()];
+
+  // Định dạng ngày theo yêu cầu
+  var ngay_dinh_dang = thu + ", " + ngay.format("DD [thg] MM, YYYY");
+  return ngay_dinh_dang;
+};
 
 const ClothesItem = ({
   image = "https://i.pinimg.com/564x/43/68/be/4368be35f084ae89a75475c5ec0d7feb.jpg",
@@ -75,16 +88,15 @@ const HistoryItem = (h) => {
     <div className="history-item">
       <div className="history-header">
         <div className="date-title" title="Chỉnh sửa" onClick={handleOpen}>
-          <ArrowRightLineIcon />
-          <span>{moment(h?.date).format("DD/MM/yyyy")}</span>
+          <span>{formatDate(h?.date)}</span>
         </div>
         <div className="setting">
           {/* <FontAwesomeIcon icon={faPencil} onClick={handleOpen} /> */}
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={faSquareMinus}
             onClick={openRemove}
             className="remove-history"
-          />
+          /> */}
           <Modal open={remove} onClose={closeRemove}>
             <Modal.Body>
               Xác nhận xóa lịch sử ngày{" "}

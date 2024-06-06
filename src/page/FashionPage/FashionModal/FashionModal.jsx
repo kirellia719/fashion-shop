@@ -148,9 +148,12 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         <Modal.Title>Trang phục mới</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "unset" }}>
-        <ControlRow
-          label="Danh mục"
-          control={
+        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
+          <FlexboxGrid.Item colspan={10}>Danh mục: </FlexboxGrid.Item>
+          <FlexboxGrid.Item
+            colspan={14}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <InputPicker
               creatable
               style={{ width: 150 }}
@@ -162,22 +165,29 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
                 categoryList.push(value);
               }}
             />
-          }
-        />
-        <ControlRow
-          label="Tên"
-          control={
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+
+        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
+          <FlexboxGrid.Item colspan={10}>Tên: </FlexboxGrid.Item>
+          <FlexboxGrid.Item
+            colspan={14}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Input
               style={{ width: 150 }}
               placeholder="..."
               onChange={(value) => handleChange("name", value)}
               value={formValue.name}
             />
-          }
-        />
-        <ControlRow
-          label="Size"
-          control={
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
+          <FlexboxGrid.Item colspan={5}>Size: </FlexboxGrid.Item>
+          <FlexboxGrid.Item
+            colspan={6}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <InputPicker
               style={{ width: 150 }}
               data={sizeOptions.map((s) => ({ label: s, value: s }))}
@@ -185,19 +195,22 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
               value={formValue.size}
               cleanable={false}
             />
-          }
-        />
-        <ControlRow
-          label="Màu"
-          control={
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={2}></FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={4}>Màu: </FlexboxGrid.Item>
+          <FlexboxGrid.Item
+            colspan={7}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Input
               style={{ width: 150 }}
               placeholder="..."
               onChange={(value) => handleChange("color", value)}
               value={formValue.color}
             />
-          }
-        />
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+
         <ControlRow
           label="Thời điểm mua"
           control={

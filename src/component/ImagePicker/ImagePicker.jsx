@@ -42,23 +42,25 @@ const ImagePicker = ({ data, value = [], onChange, groupBy }) => {
           </Button>
         </FlexboxGrid.Item>
       </FlexboxGrid>
-      <div className="image-list">
-        {dataOptions.map((option, index) => {
-          const findIndex =
-            value.findIndex((item) => item === option.value) + 1;
-          return (
-            <div
-              className={`image-item ${findIndex ? "active" : ""}`}
-              onClick={() => handleSelect(option.value)}
-              key={index}
-            >
-              <img src={option.image} alt="" />
-              {findIndex ? (
-                <div className="image-number">{findIndex}</div>
-              ) : null}
-            </div>
-          );
-        })}
+      <div className="list-wrapper custom-scrollbar">
+        <div className="image-list ">
+          {dataOptions.map((option, index) => {
+            const findIndex =
+              value.findIndex((item) => item === option.value) + 1;
+            return (
+              <div
+                className={`image-item ${findIndex ? "active" : ""}`}
+                onClick={() => handleSelect(option.value)}
+                key={index}
+              >
+                <img src={option.image} alt="" />
+                {findIndex ? (
+                  <div className="image-number">{findIndex}</div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

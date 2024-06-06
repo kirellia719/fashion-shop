@@ -1,9 +1,14 @@
 .ImagePicker {
+  .list-wrapper {
+    aspect-ratio: 10/9;
+    height: min-content a !important;
+    overflow-y: auto;
+  }
   .image-list {
     // aspect-ratio: 1/1;
     display: grid;
-    grid-template-columns: repeat(5, calc((100% - 6px) / 5));
-    // grid-template-rows: repeat(4, calc((100% - 6px) / 4));
+    grid-template-columns: repeat(5, calc((100% - 10px) / 5));
+
     justify-content: space-between;
     row-gap: 2px;
     .image-item {
