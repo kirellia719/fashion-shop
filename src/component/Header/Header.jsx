@@ -2,7 +2,7 @@ import "./Header.scss";
 
 import { useState, forwardRef } from "react";
 
-import viteLogo from "/vite.svg";
+import logo from "./avatar.jpg";
 import MenuIcon from "@rsuite/icons/Menu";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
 import CalendarIcon from "@rsuite/icons/Calendar";
@@ -23,13 +23,16 @@ const Header = () => {
 
   return (
     <div className="Header">
-      <Navbar style={{ width: "100%" }} appearance="subtle">
+      <Navbar
+        style={{ width: "100%", justifyContent: "flex-start" }}
+        appearance="subtle"
+      >
         <Nav>
-          <Nav.Item className="nav-item">
+          <div>
             <div className="logo">
-              <img src={viteLogo} className="logo" alt="Vite logo" />
+              <img src={logo} className="logo" alt="Vite logo" />
             </div>
-          </Nav.Item>
+          </div>
         </Nav>
         <Nav activeKey={activeKey} onSelect={setActiveKey} pullRight>
           <Nav.Item

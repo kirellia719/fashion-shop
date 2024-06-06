@@ -103,6 +103,7 @@ const FashionPage = () => {
 
   return (
     <div className="fashion-page">
+      <div className="sum">Tổng số tiền mua đồ: 20.020.202 đồng</div>
       <div className="filter-container">
         <div className="filter-box custom-scrollbar">
           <div className="search-box item">

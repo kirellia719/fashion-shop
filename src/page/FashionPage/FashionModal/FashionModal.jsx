@@ -24,6 +24,7 @@ import { sizeOptions } from "../../../utils/constants";
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
 import { AddFasionAction } from "~/redux/FashionReducer";
+import Cropper from "../../../component/Cropper/Cropper";
 
 function toThousands(value) {
   return (
@@ -53,6 +54,27 @@ const defaultForm = {
   price: null,
   image: null,
   size: "XS",
+};
+
+const CropForm = ({ file, onCropped }) => {
+  const [open, setOpen] = useState(false);
+  const openCrop = () => setOpen(true);
+  const closeCrop = () => setOpen(false);
+
+  return (
+    <>
+      <Button onClick={openCrop}>Crop</Button>
+      <Modal open={open} onClose={closeCrop}>
+        <Cropper
+          imageToCrop={URL.createObjectURL(file)}
+          croppedImage={(file) => {
+            onCropped(file);
+            closeCrop();
+          }}
+        />
+      </Modal>
+    </>
+  );
 };
 
 const warning = (value) => (
@@ -207,28 +229,38 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         <ControlRow
           label="Hình Ảnh"
           control={
-            <Uploader
-              fileListVisible={false}
-              listType="picture-text"
-              onUpload={(file) => {
-                handleChange("image", file.blobFile);
-              }}
-              action=""
-              draggable
-            >
-              <button>
-                {formValue.image ? (
-                  <img
-                    src={URL.createObjectURL(formValue.image)}
-                    width="100%"
-                    height="100%"
-                    style={{ borderRadius: 10 }}
-                  />
-                ) : (
-                  <CameraRetroIcon style={{ fontSize: "2rem" }} />
-                )}
-              </button>
-            </Uploader>
+            <div style={{ display: "block" }}>
+              {formValue.image && (
+                <CropForm
+                  file={formValue.image}
+                  onCropped={(file) => {
+                    handleChange("image", file);
+                  }}
+                />
+              )}
+              <Uploader
+                fileListVisible={false}
+                listType="picture-text"
+                onUpload={(file) => {
+                  handleChange("image", file.blobFile);
+                }}
+                action=""
+                draggable
+              >
+                <button>
+                  {formValue.image ? (
+                    <img
+                      src={URL.createObjectURL(formValue.image)}
+                      width="100%"
+                      height="100%"
+                      style={{ borderRadius: 10 }}
+                    />
+                  ) : (
+                    <CameraRetroIcon style={{ fontSize: "2rem" }} />
+                  )}
+                </button>
+              </Uploader>
+            </div>
           }
         />
       </Modal.Body>
