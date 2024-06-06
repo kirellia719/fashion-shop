@@ -13,11 +13,13 @@ import { Drawer, Sidenav, Nav, Navbar } from "rsuite";
 
 import { Link, useLocation } from "react-router-dom";
 
-const NavLink = forwardRef(({ href, children, ...rest }, ref) => (
-  <Link ref={ref} to={href} {...rest}>
-    {children}
-  </Link>
-));
+const NavLink = forwardRef(({ href, children, ...rest }, ref) => {
+  return (
+    <Link ref={ref} to={href} {...rest}>
+      {children}
+    </Link>
+  );
+});
 
 const Header = () => {
   const location = useLocation();

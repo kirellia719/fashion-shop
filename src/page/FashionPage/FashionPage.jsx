@@ -39,7 +39,9 @@ const FashionItem = (props) => {
     try {
       const { data } = await api.put(`/fashion/like/${_id}`, {});
       dispatch(UpdateFashionAction(data));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { _id, name, image, liked, category, price, color, date, size } = props;

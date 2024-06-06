@@ -15,6 +15,7 @@ import {
   InputNumber,
   Timeline,
   DateRangePicker,
+  Loader,
 } from "rsuite";
 const { before } = DateRangePicker;
 import SearchIcon from "@rsuite/icons/Search";
@@ -179,7 +180,9 @@ const StatisticPage = () => {
     try {
       const { data } = await api.post("/statistic", date);
       setClothes(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
 
@@ -195,7 +198,6 @@ const StatisticPage = () => {
     (a, b) => (b.histories.length - a.histories.length) * sort
   );
 
-  console.log(sortedClothes);
   return (
     <div className="statistic-page">
       <div className="filter-container">
@@ -249,9 +251,15 @@ const StatisticPage = () => {
       </div>
       <div className="clothes-container">
         <div className="clothes-list">
-          {sortedClothes.map((c, index) => (
-            <ClothesItem key={index} {...c} />
-          ))}
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              {sortedClothes.map((c, index) => (
+                <ClothesItem key={index} {...c} />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

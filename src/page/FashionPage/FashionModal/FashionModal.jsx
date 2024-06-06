@@ -105,7 +105,7 @@ const warning = (value) => (
     Thiếu <strong>{value}</strong>
   </Message>
 );
-const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
+const FashionModal = ({ onClose, open, categoryList }) => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -155,7 +155,9 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
           );
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     setLoading(false);
   };
   const data = categoryList.map((c) => ({ label: c, value: c }));

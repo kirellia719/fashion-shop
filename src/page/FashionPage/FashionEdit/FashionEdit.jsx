@@ -64,7 +64,7 @@ const FashionEdit = ({ onClose, open, categoryList, fashion, _id }) => {
     setLoading(true);
     try {
       if (!loading) {
-        const { category, name, color, date, price, image } = formValue;
+        const { category, name } = formValue;
         if (!category) {
           toaster.push(warning("Danh mục"), {
             placement: "topCenter",
@@ -105,10 +105,10 @@ const FashionEdit = ({ onClose, open, categoryList, fashion, _id }) => {
     if (confirm) {
       setLoading(true);
       try {
-        const { data } = await api.delete(`/fashion/${_id}`);
+        await api.delete(`/fashion/${_id}`);
         toaster.push(
           <Message showIcon type="success">
-            Đã xóa {fashion.name}
+            Đã xóa {fashion?.name}
           </Message>,
           {
             duration: 2000,

@@ -4,7 +4,7 @@ import { Button, FlexboxGrid, Input, InputGroup } from "rsuite";
 import SearchIcon from "@rsuite/icons/Search";
 import { useState } from "react";
 
-const ImagePicker = ({ data, value = [], onChange, groupBy }) => {
+const ImagePicker = ({ data, value = [], onChange }) => {
   const [search, setSearch] = useState("");
 
   const handleSelect = (v) => {

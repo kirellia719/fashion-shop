@@ -22,7 +22,12 @@ function mimeToExtension(mime) {
   }
 }
 
-const CropperModal = ({ open, onClose, imageToCrop, croppedImage }) => {
+const CropperModal = ({
+  open = false,
+  onClose = () => {},
+  imageToCrop = null,
+  croppedImage = () => {},
+}) => {
   const imageRef = useRef();
   const [crop, setCrop] = useState({});
 

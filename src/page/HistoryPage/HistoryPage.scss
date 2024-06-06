@@ -1,90 +1,99 @@
 .history-page {
   height: 100%;
 
-  .histories-list {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    @media only screen and (max-width: 500px) {
-      gap: 0;
+  .histories-month {
+    padding: 10px 5px;
+    // margin-bottom: 5px;
+    .month-title {
+      font-size: 1.2rem;
+      font-weight: 600;
     }
+    .histories-list {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
 
-    .history-item {
-      padding: 0.2rem;
-      .history-header {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        .date-title {
-          font-weight: 500;
-          color: #333;
-
-          &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-          }
-        }
-
-        .setting {
-          font-size: 1.2rem;
-
-          .remove-history {
-            cursor: pointer;
-          }
-        }
-      }
-      .clothes-list {
-        display: flex;
+      @media only screen and (max-width: 500px) {
         gap: 5px;
-        flex-wrap: wrap;
+      }
 
-        @media only screen and (max-width: 500px) {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
+      .history-item {
+        .history-header {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+          .date-title {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.8rem;
+
+            &:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+          }
+
+          .setting {
+            font-size: 1rem;
+
+            .remove-history {
+              cursor: pointer;
+            }
+          }
         }
+        .clothes-list {
+          display: flex;
+          gap: 2px;
+          flex-wrap: wrap;
 
-        .clothes-item {
-          border: 1px solid #ccc;
-          position: relative;
-          height: 200px;
-          @media only screen and (max-width: 1200px) {
-            height: 175px;
-          }
-          @media only screen and (max-width: 800px) {
-            height: 150px;
-          }
           @media only screen and (max-width: 500px) {
-            aspect-ratio: 2/3;
-            height: auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
           }
 
-          img {
-            aspect-ratio: 2/3;
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-          }
+          .clothes-item {
+            border: 1px solid #ccc;
+            position: relative;
+            height: 200px;
+            @media only screen and (max-width: 1200px) {
+              height: 175px;
+            }
+            @media only screen and (max-width: 800px) {
+              height: 150px;
+            }
+            @media only screen and (max-width: 500px) {
+              aspect-ratio: 2/3;
+              height: auto;
+            }
 
-          .like-btn {
-            position: absolute;
-            top: 0.1rem;
-            right: 0.1rem;
-            padding: 0.2rem;
-            color: rgb(214, 0, 11);
-            background-color: rgba(0, 0, 0, 0.1);
-            width: 1.4rem;
-            height: 1.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: 0.2s;
+            img {
+              aspect-ratio: 2/3;
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+            }
+
+            .like-btn {
+              position: absolute;
+              top: 0.1rem;
+              right: 0.1rem;
+              padding: 0.2rem;
+              color: rgb(214, 0, 11);
+              background-color: rgba(0, 0, 0, 0.1);
+              width: 1.4rem;
+              height: 1.4rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              transition: 0.2s;
+            }
           }
         }
       }
     }
   }
+
   .add-btn {
     position: fixed;
     bottom: 1rem;

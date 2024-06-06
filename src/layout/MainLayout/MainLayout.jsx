@@ -27,7 +27,7 @@ const MainLayout = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="MainLayout">
