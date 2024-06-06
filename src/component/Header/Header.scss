@@ -38,3 +38,15 @@
     font-weight: 700;
   }
 }
+
+.header-drawer {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .menu-btn {
+    width: 2rem;
+    aspect-ratio: 1;
+  }
+}

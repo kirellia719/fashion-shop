@@ -24,7 +24,10 @@ import { sizeOptions } from "../../../utils/constants";
 import CameraRetroIcon from "@rsuite/icons/legacy/CameraRetro";
 
 import { AddFasionAction } from "~/redux/FashionReducer";
-import Cropper from "../../../component/Cropper/Cropper";
+import CropperModal from "../../../component/CropperModal/CropperModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCropSimple } from "@fortawesome/free-solid-svg-icons/faCropSimple";
 
 function toThousands(value) {
   return (
@@ -56,24 +59,44 @@ const defaultForm = {
   size: "XS",
 };
 
-const CropForm = ({ file, onCropped }) => {
+const ImageCrop = ({ src, onCropped }) => {
   const [open, setOpen] = useState(false);
   const openCrop = () => setOpen(true);
+
   const closeCrop = () => setOpen(false);
 
+  const image = URL.createObjectURL(src);
+
   return (
-    <>
-      <Button onClick={openCrop}>Crop</Button>
-      <Modal open={open} onClose={closeCrop}>
-        <Cropper
-          imageToCrop={URL.createObjectURL(file)}
-          croppedImage={(file) => {
-            onCropped(file);
-            closeCrop();
-          }}
+    <div className="crop-image">
+      <div>
+        <img src={image} alt="img" />
+      </div>
+      <div
+        className="crop-btn"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openCrop();
+        }}
+      >
+        <FontAwesomeIcon icon={faCropSimple} size="lg" />
+      </div>
+
+      <div
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <CropperModal
+          open={open}
+          onClose={closeCrop}
+          imageToCrop={image}
+          croppedImage={onCropped}
         />
-      </Modal>
-    </>
+      </div>
+    </div>
   );
 };
 
@@ -148,12 +171,9 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         <Modal.Title>Trang phục mới</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "unset" }}>
-        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
-          <FlexboxGrid.Item colspan={10}>Danh mục: </FlexboxGrid.Item>
-          <FlexboxGrid.Item
-            colspan={14}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+        <ControlRow
+          label="Danh mục"
+          control={
             <InputPicker
               creatable
               style={{ width: 150 }}
@@ -165,29 +185,22 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
                 categoryList.push(value);
               }}
             />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-
-        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
-          <FlexboxGrid.Item colspan={10}>Tên: </FlexboxGrid.Item>
-          <FlexboxGrid.Item
-            colspan={14}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+          }
+        />
+        <ControlRow
+          label="Tên"
+          control={
             <Input
               style={{ width: 150 }}
               placeholder="..."
               onChange={(value) => handleChange("name", value)}
               value={formValue.name}
             />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <FlexboxGrid style={{ marginBottom: 10 }} align="middle">
-          <FlexboxGrid.Item colspan={5}>Size: </FlexboxGrid.Item>
-          <FlexboxGrid.Item
-            colspan={6}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+          }
+        />
+        <ControlRow
+          label="Size"
+          control={
             <InputPicker
               style={{ width: 150 }}
               data={sizeOptions.map((s) => ({ label: s, value: s }))}
@@ -195,22 +208,19 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
               value={formValue.size}
               cleanable={false}
             />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={2}></FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={4}>Màu: </FlexboxGrid.Item>
-          <FlexboxGrid.Item
-            colspan={7}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+          }
+        />
+        <ControlRow
+          label="Màu"
+          control={
             <Input
               style={{ width: 150 }}
               placeholder="..."
               onChange={(value) => handleChange("color", value)}
               value={formValue.color}
             />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-
+          }
+        />
         <ControlRow
           label="Thời điểm mua"
           control={
@@ -242,15 +252,7 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
         <ControlRow
           label="Hình Ảnh"
           control={
-            <div style={{ display: "block" }}>
-              {formValue.image && (
-                <CropForm
-                  file={formValue.image}
-                  onCropped={(file) => {
-                    handleChange("image", file);
-                  }}
-                />
-              )}
+            <div style={{ width: 150 }}>
               <Uploader
                 fileListVisible={false}
                 listType="picture-text"
@@ -260,18 +262,18 @@ const FashionModal = ({ onClose, open, categoryList, setFashions }) => {
                 action=""
                 draggable
               >
-                <button>
+                <div>
                   {formValue.image ? (
-                    <img
-                      src={URL.createObjectURL(formValue.image)}
-                      width="100%"
-                      height="100%"
-                      style={{ borderRadius: 10 }}
+                    <ImageCrop
+                      src={formValue.image}
+                      onCropped={(file) => handleChange("image", file)}
                     />
                   ) : (
-                    <CameraRetroIcon style={{ fontSize: "2rem" }} />
+                    <div className="upload-image">
+                      <CameraRetroIcon style={{ fontSize: "2rem" }} />
+                    </div>
                   )}
-                </button>
+                </div>
               </Uploader>
             </div>
           }

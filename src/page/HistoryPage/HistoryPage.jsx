@@ -20,13 +20,13 @@ const formatDate = (date) => {
   var ngay = moment(date);
 
   // Danh sách các ngày trong tuần
-  var thu_trong_tuan = ["Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7", "CN"];
+  var thu_trong_tuan = ["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"];
 
   // Lấy tên ngày trong tuần từ đối tượng ngày
   var thu = thu_trong_tuan[ngay.day()];
 
   // Định dạng ngày theo yêu cầu
-  var ngay_dinh_dang = thu + ", " + ngay.format("DD [thg] MM, YYYY");
+  var ngay_dinh_dang = thu + ", " + ngay.format("DD/MM/YYYY");
   return ngay_dinh_dang;
 };
 
@@ -91,12 +91,11 @@ const HistoryItem = (h) => {
           <span>{formatDate(h?.date)}</span>
         </div>
         <div className="setting">
-          {/* <FontAwesomeIcon icon={faPencil} onClick={handleOpen} /> */}
-          {/* <FontAwesomeIcon
+          <FontAwesomeIcon
             icon={faSquareMinus}
             onClick={openRemove}
             className="remove-history"
-          /> */}
+          />
           <Modal open={remove} onClose={closeRemove}>
             <Modal.Body>
               Xác nhận xóa lịch sử ngày{" "}

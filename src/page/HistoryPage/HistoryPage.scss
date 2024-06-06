@@ -6,13 +6,16 @@
     gap: 1rem;
     flex-wrap: wrap;
 
+    @media only screen and (max-width: 500px) {
+      gap: 0;
+    }
+
     .history-item {
-      padding: 0.5rem;
+      padding: 0.2rem;
       .history-header {
         display: flex;
         gap: 1rem;
         align-items: center;
-        padding-bottom: 5px;
         .date-title {
           font-weight: 500;
           color: #333;
@@ -36,6 +39,11 @@
         gap: 5px;
         flex-wrap: wrap;
 
+        @media only screen and (max-width: 500px) {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+        }
+
         .clothes-item {
           border: 1px solid #ccc;
           position: relative;
@@ -47,7 +55,8 @@
             height: 150px;
           }
           @media only screen and (max-width: 500px) {
-            height: 125px;
+            aspect-ratio: 2/3;
+            height: auto;
           }
 
           img {

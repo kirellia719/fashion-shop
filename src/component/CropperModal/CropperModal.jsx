@@ -1,7 +1,8 @@
+import "./CropperModal.scss";
 import { useRef, useState } from "react";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { Button } from "rsuite";
+import { Button, Modal, ButtonToolbar } from "rsuite";
 
 const ASPECT = 2 / 3;
 
@@ -21,7 +22,7 @@ function mimeToExtension(mime) {
   }
 }
 
-const Cropper = ({ imageToCrop, croppedImage }) => {
+const CropperModal = ({ open, onClose, imageToCrop, croppedImage }) => {
   const imageRef = useRef();
   const [crop, setCrop] = useState({});
 
@@ -33,6 +34,9 @@ const Cropper = ({ imageToCrop, croppedImage }) => {
     canvas.width = crop.width;
     canvas.height = crop.height;
     const ctx = canvas.getContext("2d");
+
+    console.log(image.naturalWidth, image.width, crop.width);
+    console.log(image.naturalHeight, image.height, crop.height);
 
     const pixelRatio = window.devicePixelRatio;
     canvas.width = crop.width * pixelRatio;
@@ -73,6 +77,7 @@ const Cropper = ({ imageToCrop, croppedImage }) => {
 
     const newFile = base64ToFile(base64Image);
     croppedImage(newFile);
+    onClose();
   };
 
   function onImageLoad(e) {
@@ -81,10 +86,8 @@ const Cropper = ({ imageToCrop, croppedImage }) => {
     const crop = centerCrop(
       makeAspectCrop(
         {
-          // You don't need to pass a complete crop into
-          // makeAspectCrop or centerCrop.
           unit: "%",
-          width: 90,
+          width: 100,
         },
         ASPECT,
         width,
@@ -98,15 +101,28 @@ const Cropper = ({ imageToCrop, croppedImage }) => {
   }
 
   return (
-    <>
-      <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={ASPECT}>
-        <img src={imageToCrop} alt="" ref={imageRef} onLoad={onImageLoad} />
-      </ReactCrop>
-      <Button appearance="primary" color="green" onClick={cropImageNow}>
-        Save
-      </Button>
-    </>
+    <Modal
+      open={open}
+      onClose={onClose}
+      className={`cropper-modal`}
+      size={"full"}
+    >
+      <div className="cropper-container">
+        <div>
+          <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={ASPECT}>
+            <img src={imageToCrop} alt="" ref={imageRef} onLoad={onImageLoad} />
+          </ReactCrop>
+        </div>
+        <br />
+        <ButtonToolbar>
+          <Button onClick={onClose}>Hủy</Button>
+          <Button appearance="primary" color="green" onClick={cropImageNow}>
+            Cắt
+          </Button>
+        </ButtonToolbar>
+      </div>
+    </Modal>
   );
 };
 
-export default Cropper;
+export default CropperModal;
