@@ -26,13 +26,7 @@ import {
   UpdateFashionAction,
 } from "~/redux/FashionReducer";
 
-function toThousands(value) {
-  return (
-    (value
-      ? `${value}`.replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, "$&,")
-      : value) + " VNĐ"
-  );
-}
+import { toThousands } from "../../../utils/function";
 
 const ControlRow = ({ label, control, ...rest }) => (
   <FlexboxGrid {...rest} style={{ marginBottom: 10 }} align="middle">

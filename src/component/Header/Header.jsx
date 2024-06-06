@@ -23,10 +23,7 @@ const Header = () => {
 
   return (
     <div className="Header">
-      <Navbar
-        style={{ width: "100%", justifyContent: "flex-start" }}
-        appearance="subtle"
-      >
+      <Navbar className="header-container" appearance="subtle">
         <Nav>
           <div>
             <div className="logo">
@@ -34,16 +31,7 @@ const Header = () => {
             </div>
           </div>
         </Nav>
-        <Nav activeKey={activeKey} onSelect={setActiveKey} pullRight>
-          <Nav.Item
-            eventKey="/"
-            icon={<CalendarIcon />}
-            as={NavLink}
-            href="/"
-            className="nav-item"
-          >
-            Lịch sử
-          </Nav.Item>
+        <Nav activeKey={activeKey} onSelect={setActiveKey}>
           <Nav.Item
             eventKey="/fashion"
             icon={<DashboardIcon />}
@@ -52,6 +40,15 @@ const Header = () => {
             className="nav-item"
           >
             Tủ đồ
+          </Nav.Item>
+          <Nav.Item
+            eventKey="/"
+            icon={<CalendarIcon />}
+            as={NavLink}
+            href="/"
+            className="nav-item"
+          >
+            Lịch sử
           </Nav.Item>
           <Nav.Item
             eventKey="/statistic"

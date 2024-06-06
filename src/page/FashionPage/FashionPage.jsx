@@ -17,6 +17,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartBold } from "@fortawesome/free-solid-svg-icons";
 
+import { toThousands } from "../../utils/function";
+
 const getDistinctCategory = (arr) => {
   const valueAppearance = arr.reduce((acc, curr) => {
     acc[curr] = (acc[curr] || 0) + 1;
@@ -101,9 +103,11 @@ const FashionPage = () => {
         !searchText || f.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
+  const sum = fashions.reduce((prev, f) => prev + parseInt(f.price), 0);
+
   return (
     <div className="fashion-page">
-      <div className="sum">Tổng số tiền mua đồ: 20.020.202 đồng</div>
+      <div className="sum">Tổng số tiền mua đồ: {toThousands(sum)}</div>
       <div className="filter-container">
         <div className="filter-box custom-scrollbar">
           <div className="search-box item">
